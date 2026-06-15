@@ -9,14 +9,12 @@ print("=======================================================")
 print("  CZĘŚĆ 2: UCZENIE MASZYNOWE (Gotowe biblioteki)")
 print("=======================================================\n")
 
-# 1. Wczytanie i przygotowanie danych (to samo co w Części 1)
 df = pd.read_csv('WineQT.csv')
 if 'Id' in df.columns:
     df = df.drop('Id', axis=1)
 
 df['quality_class'] = pd.cut(df['quality'], bins=[0, 4, 6, 10], labels=[0, 1, 2], include_lowest=True)
 
-# Podział cech i celów
 X = df.drop(['quality', 'quality_class'], axis=1)
 y_class = df['quality_class'].values
 y_reg = df['alcohol'].values
@@ -35,9 +33,6 @@ X_train_c = scaler_c.fit_transform(X_train_c)
 X_test_c = scaler_c.transform(X_test_c)
 
 
-# =======================================================
-# PROBLEM REGRESJI (Zgadywanie wartości Alkoholu - Błąd MSE)
-# =======================================================
 print("--- PROBLEM 1: REGRESJA (Wartość Alkoholu) ---\n")
 
 print("METODA A: Las Losowy (Random Forest Regressor)")
@@ -82,9 +77,6 @@ for alg in ['ball_tree', 'kd_tree', 'brute', 'auto']:
     print(f"Algorytm: {alg:9s} | MSE Train: {mean_squared_error(y_train_r, knn.predict(X_train_r)):.4f} | MSE Test: {mean_squared_error(y_test_r, knn.predict(X_test_r)):.4f}")
 
 
-# =======================================================
-# PROBLEM KLASYFIKACJI (Zgadywanie Klasy Jakości - Skuteczność %)
-# =======================================================
 print("\n\n--- PROBLEM 2: KLASYFIKACJA (Klasa Jakości) ---\n")
 
 print("METODA A: Las Losowy (Random Forest Classifier)")
